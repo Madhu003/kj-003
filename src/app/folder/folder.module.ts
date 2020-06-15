@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { FolderPageRoutingModule } from './folder-routing.module';
+import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
+
 
 import { FolderPage } from './folder.page';
 
@@ -13,7 +15,8 @@ import { FolderPage } from './folder.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    FolderPageRoutingModule
+    FolderPageRoutingModule,
+    PhotoLibrary
   ],
   declarations: [FolderPage]
 })
