@@ -1,21 +1,30 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>{{ folder }}</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Gallery</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <!-- <ion-spinner *ngIf="showSpinner"></ion-spinner> -->
+    <ion-button expand="full" (click)="openCamera()">+ Add Photo</ion-button>
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Gallery</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-grid>
+        <ion-row *ngFor="let category of categories" (click)="goToTappedCategory($event, category)">
+            <ion-col size="12" style="background: #0018ff1f;">{{category.name}}</ion-col>
+            <ion-col size="3" *ngFor="let item of category.list.slice(0, 6); let i = index">
+                <ion-item>
+                    <ion-thumbnail size="3">
+                        <img [src]=item.webURL>
+                    </ion-thumbnail>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
