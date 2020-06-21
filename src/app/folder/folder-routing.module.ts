@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FolderPage } from './folder.page';
 import { CategoryWiseGalleryComponent } from './category-wise-gallery/category-wise-gallery.component';
+import { ImagesByTagsComponent } from './images-by-tags/images-by-tags.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
     path: 'category/:categoryName',
     component: CategoryWiseGalleryComponent
   },
+  {
+    path: 'images-by-tags',
+    component: ImagesByTagsComponent
+  }
 ];
 
 @NgModule({

@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <!-- <ion-spinner *ngIf="showSpinner"></ion-spinner> -->
-    <ion-button expand="full" (click)="openCamera()">+ Add Photo</ion-button>
+    <ion-searchbar animated placeholder="Search By Tags" (click)="goToImagesByTags()">
+    </ion-searchbar>
     <ion-header collapse="condense">
         <ion-toolbar>
             <ion-title size="large">Gallery</ion-title>
@@ -19,11 +19,7 @@
         <ion-row *ngFor="let category of categories" (click)="goToTappedCategory($event, category)">
             <ion-col size="12" style="background: #0018ff1f;">{{category.name}}</ion-col>
             <ion-col size="3" *ngFor="let item of category.list.slice(0, 6); let i = index">
-                <ion-item>
-                    <ion-thumbnail size="3">
-                        <img [src]=item.webURL>
-                    </ion-thumbnail>
-                </ion-item>
+                <img class="thumbnail-img" [src]=item.webURL>
             </ion-col>
         </ion-row>
     </ion-grid>

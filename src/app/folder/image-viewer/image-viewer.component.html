@@ -1,0 +1,31 @@
+<ion-header *ngIf="toggle">
+    <ion-toolbar>
+        <ion-title>{{image.fileName || "Image Viewer"}}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismissModal()">Close</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+    <div (click)="toggleHeaderAndFooter()"
+        style="height: 100%;display: flex;align-items: center;justify-content: center;">
+        <img [src]=image.webURL />
+    </div>
+</ion-content>
+<!-- <ion-footer>
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="4" class="ion-align-self-start">
+                    ion-col
+                </ion-col>
+                <ion-col size="4" class="ion-align-self-center">
+                    ion-col
+                </ion-col>
+                <ion-col size="4" class="ion-align-self-end">
+                    ion-col
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-footer> -->

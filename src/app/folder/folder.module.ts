@@ -15,6 +15,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 import { FolderPage } from './folder.page';
 import { CategoryWiseGalleryComponent } from './category-wise-gallery/category-wise-gallery.component';
+import { ImageViewerComponent } from './image-viewer/image-viewer.component';
+import { ImagesByTagsComponent } from './images-by-tags/images-by-tags.component';
 
 @NgModule({
   imports: [
@@ -26,7 +28,9 @@ import { CategoryWiseGalleryComponent } from './category-wise-gallery/category-w
   declarations: [
     FolderPage,
     CDVPhotoLibraryPipe,
-    CategoryWiseGalleryComponent
+    CategoryWiseGalleryComponent,
+    ImageViewerComponent,
+    ImagesByTagsComponent
   ],
   providers: [
     PhotoLibrary,

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GalleryImagesService } from '../gallery-images.service';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { ImageViewerComponent } from '../image-viewer/image-viewer.component';
 
 @Component({
     selector: 'app-category-wise-gallery',
@@ -10,10 +12,12 @@ import { ActivatedRoute } from '@angular/router';
 export class CategoryWiseGalleryComponent implements OnInit {
     categoryName = 'Category';
     imagesList = [];
+    currentModal;
 
     constructor(
         private galleryImagesService: GalleryImagesService,
         private router: ActivatedRoute,
+        private modalController: ModalController
     ) { }
 
     ngOnInit() {
@@ -21,10 +25,21 @@ export class CategoryWiseGalleryComponent implements OnInit {
         this.imagesList = this.galleryImagesService.getLibrary(this.categoryName) || [];
     }
 
-    // showImage(item) {
-    //     this.fullScreenImage.showImageURL(item.webURL)
-    //         .then((data: any) => console.log(data))
-    //         .catch((error: any) => console.error(error));
-    // }
+    async showImage(item) {
+        const currentModal = await this.modalController.create({
+            component: ImageViewerComponent,
+            cssClass: 'my-custom-class',
+            componentProps: {
+                image: item
+            },
+            showBackdrop: true,
+            swipeToClose: true
+        });
+        return await currentModal.present();
+    }
+
+    async dismissModal() {
+        await this.currentModal.dismiss();
+    }
 
 }

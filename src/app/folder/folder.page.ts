@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -20,13 +20,13 @@ export class FolderPage implements OnInit {
     showSpinner = true;
 
     constructor(
-        private activatedRoute: ActivatedRoute,
         private photoLibrary: PhotoLibrary,
         private cd: ChangeDetectorRef,
         private camera: Camera,
         private alertController: AlertController,
         private galleryImagesService: GalleryImagesService,
-        private router: Router
+        private router: Router,
+        public loadingController: LoadingController
     ) {
     }
 
@@ -34,60 +34,85 @@ export class FolderPage implements OnInit {
         this.getPhotoLibrary();
     }
 
-    getPhotoLibrary() {
-        this.photoLibrary.requestAuthorization().then(() => {
-            this.photoLibrary.getLibrary().subscribe({
-                next: res => {
-                    console.log(this);
-                    this.library = this.library.concat(res['library']);
-
-                    this.library.forEach(item => {
-                        const { id } = item;
-                        const url = 'file://' + id.split(';')[1];
-                        item.webURL = window['Ionic']['WebView'].convertFileSrc(url);
-
-                        const idArray = item.id.split('/');
-                        const category = idArray[idArray.length - 2];
-                        this.categories[category] = this.categories[category] || [];
-                        this.categories[category].push(item);
-                    });
-
-                    const categories = [];
-                    // tslint:disable-next-line: forin
-                    for (const key in this.categories) {
-                        categories.push({
-                            name: key,
-                            list: this.categories[key]
-                        });
-                    }
-
-                    this.categories = categories;
-                    this.galleryImagesService.setLibrary(categories);
-
-                    this.cd.detectChanges();
-                    this.showSpinner = false;
-
-                },
-                error: err => {
-                    console.log('could not get photos');
-                    this.showSpinner = false;
-
-                },
-                complete: () => {
-                    this.showSpinner = false;
-
-                    console.log('done getting photos');
-                }
-            });
-        }).catch(err => {
-            this.showSpinner = false;
-            console.log('permissions weren\'t granted');
-            this.presentAlert();
-        });
+    goToImagesByTags(){
+        this.router.navigateByUrl('/gallery/images-by-tags');
     }
 
-    getKeys() {
-        return Object.keys(this.categories);
+    async getPhotoLibrary() {
+        if (this.galleryImagesService.getLibrary()) {
+            this.categories = this.galleryImagesService.getLibrary();
+        } else {
+            let loading = await this.presentLoading();
+            this.photoLibrary.requestAuthorization().then(() => {
+                this.photoLibrary.getLibrary().subscribe({
+                    next: res => {
+                        console.log(this);
+                        loading.dismiss();
+                        this.library = this.library.concat(res['library']);
+
+                        this.library.forEach(item => {
+                            const { id } = item;
+                            const url = 'file://' + id.split(';')[1];
+                            item.webURL = window['Ionic']['WebView'].convertFileSrc(url);
+
+                            const idArray = item.id.split('/');
+                            const category = idArray[idArray.length - 2];
+                            this.categories[category] = this.categories[category] || [];
+                            this.categories[category].push(item);
+                        });
+
+                        const categories = [];
+                        // tslint:disable-next-line: forin
+                        for (const key in this.categories) {
+                            categories.push({
+                                name: key,
+                                list: this.categories[key]
+                            });
+                        }
+
+                        this.categories = categories;
+                        this.galleryImagesService.setLibrary(categories);
+
+                        this.cd.detectChanges();
+                        this.showSpinner = false;
+
+                    },
+                    error: err => {
+                        console.log('could not get photos');
+                        this.showSpinner = false;
+                        loading.dismiss();
+                    },
+                    complete: () => {
+                        this.showSpinner = false;
+                        console.log('done getting photos');
+                        loading.dismiss();
+                    }
+                });
+            }).catch(err => {
+                this.showSpinner = false;
+                console.log('permissions weren\'t granted');
+                this.presentAlert();
+                loading.dismiss();
+            });
+        }
+    }
+
+    async presentLoading() {
+        const loading = await this.loadingController.create({
+            cssClass: 'my-custom-class',
+            message: 'Please wait...',
+            //   duration: 2000
+        });
+        await loading.present();
+        return loading;
+    }
+
+    searchByTag(event) {
+        if (event.detail.value) {
+            console.log(event.detail.value)
+        } else {
+            console.log("cleared");
+        }
     }
 
     goToTappedCategory(event, item) {
