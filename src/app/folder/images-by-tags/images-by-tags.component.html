@@ -3,23 +3,23 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Images BY Tages</ion-title>
+        <ion-title>Images By Tages</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-searchbar animated placeholder="Search By Tags" debounce="1000"  (ionChange)="searchByTag($event)">
+    <ion-searchbar animated placeholder="Search By Tags" debounce="1000" (ionChange)="searchByTag($event)">
     </ion-searchbar>
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">Images BY Tages</ion-title>
-        </ion-toolbar>
-    </ion-header>
     <ion-grid>
-        <ion-row>
-            <ion-col size="6" *ngFor="let item of imagesList" (click)=showImage(item)>
-                <img class="thumbnail-img" [src]=item.webURL />
-            </ion-col>
-        </ion-row>
+        <ion-virtual-scroll [items]="imagesList" approxItemHeight="320px">
+            <ion-row *virtualItem="let item;">
+                <ion-col size="6" (click)=showImage(item[0])>
+                    <img class="thumbnail-img" [src]=item[0].webURL (error)="getErrorInImage($event)" />
+                </ion-col>
+                <ion-col size="6" (click)=showImage(item[1])>
+                    <img class="thumbnail-img" [src]=item[1].webURL (error)="getErrorInImage($event)" />
+                </ion-col>
+            </ion-row>
+        </ion-virtual-scroll>
     </ion-grid>
 </ion-content>

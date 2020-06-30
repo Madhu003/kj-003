@@ -8,18 +8,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <!-- <ion-spinner *ngIf="showSpinner"></ion-spinner> -->
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">{{ categoryName }}</ion-title>
-        </ion-toolbar>
-    </ion-header>
-    <ion-grid>
-        <ion-row>
-            <ion-col size="6" *ngFor="let item of imagesList" (click)=showImage(item)>
-                <img class="thumbnail-img" [src]=item.webURL />
-            </ion-col>
-        </ion-row>
+    <ion-grid [ngStyle]="{overflow: 'scroll', 'max-height': height}">
+        <ion-virtual-scroll [items]="imagesList" approxItemHeight="600px">
+            <ion-row *virtualItem="let item let itemBounds = bounds;">
+                <ion-col size="6" (click)=showImage(item)>
+                    {{itemBounds}}
+                    <img class="thumbnail-img" [src]=item.webURL (error)="getErrorInImage($event)" />
+                </ion-col>
+            </ion-row>
+        </ion-virtual-scroll>
     </ion-grid>
 </ion-content>
 

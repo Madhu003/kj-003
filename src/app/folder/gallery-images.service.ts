@@ -16,6 +16,13 @@ export class GalleryImagesService {
                     { webURL: `${baseURL}arctichare.png` },
                     { webURL: `${baseURL}baboon.png` },
                     { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}boat.png` },
+                    { webURL: `${baseURL}cat.png` },
+                    { webURL: `${baseURL}barfruitsbara.png` }, { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}boat.png` },
+                    { webURL: `${baseURL}cat.png` },
+                    { webURL: `${baseURL}barfruitsbara.png` },
 
                 ]
             },
@@ -26,7 +33,14 @@ export class GalleryImagesService {
                     { webURL: `${baseURL}boat.png` },
                     { webURL: `${baseURL}cat.png` },
                     { webURL: `${baseURL}barfruitsbara.png` },
-
+                    { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}boat.png` },
+                    { webURL: `${baseURL}cat.png` },
+                    { webURL: `${baseURL}barfruitsbara.png` },
+                    { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}boat.png` },
+                    { webURL: `${baseURL}cat.png` },
+                    { webURL: `${baseURL}barfruitsbara.png` },
                 ]
             },
             {
@@ -36,6 +50,13 @@ export class GalleryImagesService {
                     { webURL: `${baseURL}arctichare.png` },
                     { webURL: `${baseURL}baboon.png` },
                     { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}boat.png` },
+                    { webURL: `${baseURL}cat.png` },
+                    { webURL: `${baseURL}barfruitsbara.png` }, { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}boat.png` },
+                    { webURL: `${baseURL}cat.png` },
+                    { webURL: `${baseURL}barfruitsbara.png` },
 
                 ]
             },
@@ -46,13 +67,21 @@ export class GalleryImagesService {
                     { webURL: `${baseURL}boat.png` },
                     { webURL: `${baseURL}cat.png` },
                     { webURL: `${baseURL}barfruitsbara.png` },
-
+                    { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}boat.png` },
+                    { webURL: `${baseURL}cat.png` },
+                    { webURL: `${baseURL}barfruitsbara.png` },
+                    { webURL: `${baseURL}barbara.png` },
+                    { webURL: `${baseURL}boat.png` },
+                    { webURL: `${baseURL}cat.png` },
+                    { webURL: `${baseURL}barfruitsbara.png` },
                 ]
             },
         ];
-        if (!platform.is('android')) {
-            this.library = list;
-        }
+
+        // for (let i = 0; i < 1000; i++) {
+        //     this.library = [...this.library, ...list];
+        // }
     }
 
     setLibrary(library) {

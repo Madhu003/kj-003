@@ -34,8 +34,12 @@ export class FolderPage implements OnInit {
         this.getPhotoLibrary();
     }
 
-    goToImagesByTags(){
+    goToImagesByTags() {
         this.router.navigateByUrl('/gallery/images-by-tags');
+    }
+
+    getErrorInImage(event) {
+        event.target.src = 'assets/error-image-generic.png';
     }
 
     async getPhotoLibrary() {

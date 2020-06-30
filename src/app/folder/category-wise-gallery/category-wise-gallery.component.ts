@@ -13,16 +13,23 @@ export class CategoryWiseGalleryComponent implements OnInit {
     categoryName = 'Category';
     imagesList = [];
     currentModal;
-
+    height = '200';
     constructor(
         private galleryImagesService: GalleryImagesService,
         private router: ActivatedRoute,
         private modalController: ModalController
-    ) { }
+    ) {
+        console.log(this)
+     }
 
     ngOnInit() {
         this.categoryName = this.router.snapshot.paramMap.get('categoryName');
         this.imagesList = this.galleryImagesService.getLibrary(this.categoryName) || [];
+        this.height = (window.innerHeight) + 'px';
+    }
+
+    getErrorInImage(event) {
+        event.target.src = 'assets/error-image-generic.png';
     }
 
     async showImage(item) {
