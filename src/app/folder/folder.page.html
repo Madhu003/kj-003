@@ -10,16 +10,20 @@
     <ion-searchbar animated placeholder="Search By Tags" (click)="goToImagesByTags()">
     </ion-searchbar>
     <ion-grid style="overflow: scroll; max-height: 500px;">
-            <ion-virtual-scroll [items]="categories" approxItemHeight="600px">
-                <ion-row *virtualItem="let category; let itemBounds = bounds;"
-                    (click)="goToTappedCategory($event, category)">
-                    <ion-col size="12" style="background: #0018ff1f;">
-                        {{category.name}}
-                    </ion-col>
-                    <ion-col size="3" *ngFor="let item of category.list.slice(0, 6); let i = index">
-                        <img class="thumbnail-img" [src]=item.webURL (error)="getErrorInImage($event)">
-                    </ion-col>
-                </ion-row>
-            </ion-virtual-scroll>
+        <ion-virtual-scroll [items]="categories" approxItemHeight="600px">
+            <ion-row *virtualItem="let category; let itemBounds = bounds;">
+                <ion-col size="12" style="background: #0018ff1f;">
+                    {{category.name}}
+                </ion-col>
+                <ion-col size="3" *ngFor="let item of category.list.slice(0, 6); let i = index">
+                    <thumbnail-image [image]=item></thumbnail-image>
+                </ion-col>
+                <ion-col size="3" (click)="goToTappedCategory($event, category)">
+                    <div class="thumbnail-img" style="height: 100%;display: flex;align-items: center;justify-content: center;">
+                        See More
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-virtual-scroll>
     </ion-grid>
 </ion-content>

@@ -4,20 +4,23 @@
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>Images By Tages</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="popAllSelectedImages()">OK</ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-searchbar animated placeholder="Search By Tags" debounce="1000" (ionChange)="searchByTag($event)">
+    <ion-searchbar *ngIf="!isFromTags" animated placeholder="Search By Tags" debounce="1000" (ionChange)="searchByTag($event)">
     </ion-searchbar>
     <ion-grid>
         <ion-virtual-scroll [items]="imagesList" approxItemHeight="320px">
             <ion-row *virtualItem="let item;">
-                <ion-col size="6" (click)=showImage(item[0])>
-                    <img class="thumbnail-img" [src]=item[0].webURL (error)="getErrorInImage($event)" />
+                <ion-col size="6" (click)=clickOnImage(item[0])>
+                    <thumbnail-image [image]=item[0] [isSlectionModeOn]="true" [events]="item[0].eventsSubject.asObservable()"></thumbnail-image>
                 </ion-col>
-                <ion-col size="6" (click)=showImage(item[1])>
-                    <img class="thumbnail-img" [src]=item[1].webURL (error)="getErrorInImage($event)" />
+                <ion-col size="6" (click)=clickOnImage(item[1])>
+                    <thumbnail-image [image]=item[1] [isSlectionModeOn]="true" [events]="item[1].eventsSubject.asObservable()"></thumbnail-image>
                 </ion-col>
             </ion-row>
         </ion-virtual-scroll>

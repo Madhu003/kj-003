@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { GalleryImagesService } from '../gallery-images.service';
 import { ModalController } from '@ionic/angular';
 import { ImageViewerComponent } from '../image-viewer/image-viewer.component';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
     selector: 'app-images-by-tags',
     templateUrl: './images-by-tags.component.html',
     styleUrls: ['./images-by-tags.component.scss'],
 })
-export class ImagesByTagsComponent implements OnInit {
+export class ImagesByTagsComponent implements OnInit, OnDestroy {
     categories = [];
     mainList = [];
     imagesList = [];
     height = window.innerHeight + 'px';
+    isFromTags: any;
+    modal: any;
+    tag: any;
+
     constructor(
         private galleryImagesService: GalleryImagesService,
         private modalController: ModalController
@@ -20,11 +25,29 @@ export class ImagesByTagsComponent implements OnInit {
         console.log(this);
     }
 
-    getErrorInImage(event) {
-        event.target.src = 'assets/error-image-generic.png';
+    ngOnInit() {
+        if (this.isFromTags) {
+            setTimeout(() => {
+                const searchElement = document.querySelector('input[type=search]');
+                searchElement['value'] = '.';
+                this.searchByTag();
+            }, 500);
+        }
+
+        const list = this.galleryImagesService.getLibrary();
+
+        list.forEach(element => {
+            element.list.forEach(image => {
+                image.tags = [element.name.toLowerCase()];
+                image.eventsSubject = new Subject<void>();
+                this.mainList.push(image);
+            });
+        });
+
+        this.setImagesList(this.mainList.slice(0, 8));
     }
 
-    searchByTag(event) {
+    searchByTag(event = { detail: { value: '.' } }) {
         let keywordList;
         if (event.detail.value === '.') {
             this.setImagesList(this.mainList);
@@ -63,18 +86,20 @@ export class ImagesByTagsComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
-        const list = this.galleryImagesService.getLibrary();
-        console.log(list);
+    clickOnImage(item) {
+        if (this.isFromTags) {
+            console.log(item);
+            item.eventsSubject.next();
+        } else {
+            this.showImage(item);
+        }
+    }
 
-        list.forEach(element => {
-            element.list.forEach(image => {
-                image.tags = [element.name.toLowerCase()];
-                this.mainList.push(image);
-            });
-        });
-
-        this.setImagesList(this.mainList.slice(0, 8));
+    popAllSelectedImages() {
+        this.tag.images = [];
+        // this.tag.images.push();
+        console.log(this.mainList.filter(item => item.isSelected));
+        this.modal.dismiss();
     }
 
     async showImage(item) {
@@ -88,6 +113,10 @@ export class ImagesByTagsComponent implements OnInit {
             swipeToClose: true
         });
         return await currentModal.present();
+    }
+
+    ngOnDestroy(){
+
     }
 
     // async shareButton() {

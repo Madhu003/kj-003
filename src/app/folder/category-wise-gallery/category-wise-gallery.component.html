@@ -12,8 +12,7 @@
         <ion-virtual-scroll [items]="imagesList" approxItemHeight="600px">
             <ion-row *virtualItem="let item let itemBounds = bounds;">
                 <ion-col size="6" (click)=showImage(item)>
-                    {{itemBounds}}
-                    <img class="thumbnail-img" [src]=item.webURL (error)="getErrorInImage($event)" />
+                    <thumbnail-image [image]=item></thumbnail-image>
                 </ion-col>
             </ion-row>
         </ion-virtual-scroll>

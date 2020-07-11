@@ -28,10 +28,6 @@ export class CategoryWiseGalleryComponent implements OnInit {
         this.height = (window.innerHeight) + 'px';
     }
 
-    getErrorInImage(event) {
-        event.target.src = 'assets/error-image-generic.png';
-    }
-
     async showImage(item) {
         const currentModal = await this.modalController.create({
             component: ImageViewerComponent,

@@ -18,7 +18,7 @@
             <ion-input id="tag-edit" style="padding-left: 0px;" *ngIf="tag.isInEditMode" [value]="tag.name"
                 (ionChange)="getINputValue($event, tag)">
             </ion-input>
-            <ion-button fill="clear" (click)="addImagesToTags(tag)">
+            <ion-button fill="clear" (click)="selectImages(tag)">
                 +
             </ion-button>
             <ion-button fill="clear" (click)="setEditable(tag)">

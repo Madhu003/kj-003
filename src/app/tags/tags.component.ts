@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { ImagesByTagsComponent } from '../folder/images-by-tags/images-by-tags.component';
+import { CommanService } from '../comman.service';
 
 @Component({
     selector: 'app-tags',
@@ -10,17 +12,13 @@ export class TagsComponent implements OnInit {
     tags = [];
 
     constructor(
-        public alertController: AlertController
+        public alertController: AlertController,
+        private modalController: ModalController,
+        private commanService: CommanService
     ) { }
 
     ngOnInit() {
-        this.tags = [
-            { name: 'Gold' },
-            { name: 'Silver' },
-            { name: 'Order-645' },
-            { name: 'Bill-555' },
-            { name: 'Rings' }
-        ];
+        this.tags = this.commanService.getAllTags();
     }
 
     getINputValue(event, tag) {
@@ -41,6 +39,20 @@ export class TagsComponent implements OnInit {
                 item.isInEditMode = false;
             }
         });
+    }
+
+    async selectImages(tag) {
+        const currentModal = await this.modalController.create({
+            component: ImagesByTagsComponent,
+            cssClass: 'my-custom-class',
+            componentProps: {
+                isFromTags: true,
+                tag
+            },
+            showBackdrop: true,
+            swipeToClose: true
+        });
+        return await currentModal.present();
     }
 
     async presentAlertPrompt() {

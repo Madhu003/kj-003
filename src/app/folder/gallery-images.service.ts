@@ -79,9 +79,9 @@ export class GalleryImagesService {
             },
         ];
 
-        // for (let i = 0; i < 1000; i++) {
-        //     this.library = [...this.library, ...list];
-        // }
+        for (let i = 0; i < 1000; i++) {
+            this.library = [...this.library, ...list];
+        }
     }
 
     setLibrary(library) {

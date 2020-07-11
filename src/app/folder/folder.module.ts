@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 
-
 import { FolderPageRoutingModule } from './folder-routing.module';
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 
@@ -17,6 +16,8 @@ import { FolderPage } from './folder.page';
 import { CategoryWiseGalleryComponent } from './category-wise-gallery/category-wise-gallery.component';
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
 import { ImagesByTagsComponent } from './images-by-tags/images-by-tags.component';
+import { ThumbnailImageComponent } from './thumbnail-image/thumbnail-image.component';
+import { CommanService } from '../comman.service';
 
 @NgModule({
   imports: [
@@ -30,14 +31,16 @@ import { ImagesByTagsComponent } from './images-by-tags/images-by-tags.component
     CDVPhotoLibraryPipe,
     CategoryWiseGalleryComponent,
     ImageViewerComponent,
-    ImagesByTagsComponent
+    ImagesByTagsComponent,
+    ThumbnailImageComponent
   ],
   providers: [
     PhotoLibrary,
     CDVPhotoLibraryPipe,
     Camera,
     PhotoViewer,
-    AlertController
+    AlertController,
+    CommanService
   ]
 })
 export class FolderPageModule { }

@@ -1,0 +1,7 @@
+<div>
+  <img class="thumbnail-img" [src]=image.webURL (error)="getErrorInImage($event)" />
+  <!-- <img class="hash-tag-water-mark" src="assets/hash-tag.png" /> -->
+  <div class="check-box" *ngIf="isSlectionModeOn">
+    <ion-checkbox [(ngModel)]="image.isSelected"></ion-checkbox>
+  </div>
+</div>
